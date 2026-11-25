@@ -51,12 +51,13 @@ jobs:
         run: |
           CMAKE_VERSION="3.31.5"
           CMAKE_DIR="${ANDROID_HOME}/cmake/${CMAKE_VERSION}"
-          mkdir -p "${CMAKE_DIR}"
+          sudo rm -rf "${CMAKE_DIR}"
+          sudo mkdir -p "${CMAKE_DIR}"
           wget -q "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh" -O /tmp/cmake.sh
           chmod +x /tmp/cmake.sh
-          /tmp/cmake.sh --skip-license --prefix="${CMAKE_DIR}"
+          sudo /tmp/cmake.sh --skip-license --prefix="${CMAKE_DIR}"
           rm -f /tmp/cmake.sh
-          ln -sf "$(which ninja)" "${CMAKE_DIR}/bin/ninja"
+          sudo ln -sf "$(which ninja)" "${CMAKE_DIR}/bin/ninja"
           echo "${CMAKE_DIR}/bin" >> "$GITHUB_PATH"
           "${CMAKE_DIR}/bin/cmake" --version
 
